@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jessi Lilli – Piano in the Sky</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #C8201A;
+    --blue: #2A3FA0;
+    --cream: #F5F0E8;
+    --gold: #D4A017;
+    --pink: #F1C7C8;
+    --dark: #1A1A2E;
+    --white: #FBFBFB;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--cream);
+    font-family: 'Space Mono', monospace;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+  }
+
+  /* Left panel – red */
+  .hero-left {
+    background: var(--red);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 48px;
+    overflow: hidden;
+    animation: slideInLeft 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes slideInLeft {
+    from { transform: translateX(-60px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+
+  /* Texture dots on red */
+  .hero-left::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size: 18px 18px;
+  }
+
+  /* Decorative collage shapes */
+  .shape-blob {
+    position: absolute;
+    width: 160px;
+    height: 200px;
+    background: var(--blue);
+    border-radius: 40% 60% 70% 30% / 50% 40% 60% 50%;
+    top: -40px;
+    left: -40px;
+    opacity: 0.7;
+    animation: morph 8s ease-in-out infinite;
+  }
+
+  @keyframes morph {
+    0%, 100% { border-radius: 40% 60% 70% 30% / 50% 40% 60% 50%; }
+    33% { border-radius: 70% 30% 50% 50% / 30% 60% 40% 70%; }
+    66% { border-radius: 30% 70% 30% 70% / 60% 30% 70% 40%; }
+  }
+
+  .shape-circle {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: #4AACB5;
+    border-radius: 50%;
+    top: 80px;
+    left: 70px;
+    opacity: 0.85;
+  }
+
+  .squiggle {
+    position: absolute;
+    top: 30px;
+    left: 160px;
+    width: 60px;
+    opacity: 0.9;
+  }
+
+  .hero-left-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .genre-tag {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--dark);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.7s 0.4s both;
+  }
+
+  .artist-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(70px, 9vw, 120px);
+    color: var(--white);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    animation: fadeUp 0.7s 0.5s both;
+  }
+
+  .artist-name span {
+    color: var(--gold);
+  }
+
+  .song-title-hero {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(16px, 2.2vw, 26px);
+    color: rgba(255,255,255,0.75);
+    margin-top: 16px;
+    animation: fadeUp 0.7s 0.6s both;
+  }
+
+  .song-title-hero strong {
+    color: var(--white);
+    font-style: normal;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Right panel – blue */
+  .hero-right {
+    background: var(--blue);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    animation: slideInRight 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes slideInRight {
+    from { transform: translateX(60px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+
+  /* Collage paper scraps */
+  .scrap {
+    position: absolute;
+    background: var(--red);
+    opacity: 0.5;
+  }
+  .scrap-1 { width: 100px; height: 40px; top: 30px; right: 0; transform: rotate(-8deg); }
+  .scrap-2 { width: 60px; height: 60px; bottom: 100px; left: 20px; transform: rotate(15deg); background: var(--gold); opacity: 0.6; }
+
+  .star-shape {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    width: 50px;
+    height: 50px;
+    background: var(--gold);
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    animation: spin 12s linear infinite;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* Artist image frame */
+  .artist-image-wrap {
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 0.9s 0.3s both;
+  }
+
+  .artist-image-outer {
+    width: 300px;
+    height: 370px;
+    position: relative;
+  }
+
+  /* Shadow/offset frame */
+  .artist-image-outer::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 3px solid var(--gold);
+    transform: translate(12px, 12px);
+    border-radius: 4px;
+  }
+
+  .artist-image-inner {
+    width: 100%;
+    height: 100%;
+    background: var(--pink);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Placeholder for artist image */
+  .artist-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #F1C7C8 0%, #E8A0A0 40%, #C8201A22 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .artist-placeholder::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 60%, rgba(200,32,26,0.15), transparent 70%);
+  }
+
+  .placeholder-icon {
+    font-size: 80px;
+    line-height: 1;
+    z-index: 1;
+  }
+
+  .placeholder-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: rgba(0,0,0,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 8px;
+    z-index: 1;
+  }
+
+  /* Floating badge on image */
+  .image-badge {
+    position: absolute;
+    bottom: -16px;
+    left: -20px;
+    background: var(--red);
+    color: var(--white);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border-radius: 20px;
+    z-index: 3;
+    white-space: nowrap;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  }
+
+  /* ─── CONTENT SECTION ─── */
+  .content {
+    background: var(--cream);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    padding: 80px 64px;
+    position: relative;
+  }
+
+  .content::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 64px; right: 64px;
+    height: 3px;
+    background: repeating-linear-gradient(90deg, var(--red) 0, var(--red) 20px, transparent 20px, transparent 30px);
+  }
+
+  /* Bio */
+  .bio-col {
+    padding-right: 48px;
+    animation: fadeUp 0.8s 0.2s both;
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--red);
+    opacity: 0.3;
+  }
+
+  .bio-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 900;
+    color: var(--dark);
+    line-height: 1.1;
+    margin-bottom: 24px;
+  }
+
+  .bio-heading em {
+    color: var(--red);
+    font-style: italic;
+  }
+
+  .bio-text {
+    font-size: 13px;
+    line-height: 1.9;
+    color: #444;
+    max-width: 420px;
+  }
+
+  .bio-text + .bio-text {
+    margin-top: 12px;
+  }
+
+  /* Tags */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 28px;
+  }
+
+  .tag {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .tag-blue { background: var(--blue); color: var(--white); }
+  .tag-gold { background: var(--gold); color: var(--dark); }
+  .tag-red { background: var(--red); color: var(--white); }
+
+  /* Song card */
+  .song-col {
+    animation: fadeUp 0.8s 0.35s both;
+  }
+
+  .song-card {
+    background: var(--dark);
+    border-radius: 8px;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .song-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at top left, rgba(42,63,160,0.5), transparent 60%),
+                radial-gradient(ellipse at bottom right, rgba(200,32,26,0.3), transparent 60%);
+  }
+
+  .song-card-inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Vinyl record graphic */
+  .vinyl {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 32px;
+    position: relative;
+    animation: vinylSpin 4s linear infinite paused;
+  }
+
+  .vinyl:hover {
+    animation-play-state: running;
+  }
+
+  @keyframes vinylSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .vinyl svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .song-name {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(22px, 3vw, 34px);
+    color: var(--white);
+    text-align: center;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .song-artist {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  /* Audio wave visualizer (CSS only) */
+  .wave {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    margin-bottom: 32px;
+    height: 40px;
+  }
+
+  .bar {
+    width: 3px;
+    background: var(--pink);
+    border-radius: 2px;
+    animation: wave 1.2s ease-in-out infinite;
+    opacity: 0.7;
+  }
+
+  .bar:nth-child(1)  { height: 20px; animation-delay: 0s; }
+  .bar:nth-child(2)  { height: 32px; animation-delay: 0.1s; }
+  .bar:nth-child(3)  { height: 24px; animation-delay: 0.2s; }
+  .bar:nth-child(4)  { height: 38px; animation-delay: 0.3s; }
+  .bar:nth-child(5)  { height: 16px; animation-delay: 0.4s; }
+  .bar:nth-child(6)  { height: 30px; animation-delay: 0.5s; }
+  .bar:nth-child(7)  { height: 40px; animation-delay: 0.15s; }
+  .bar:nth-child(8)  { height: 22px; animation-delay: 0.25s; }
+  .bar:nth-child(9)  { height: 35px; animation-delay: 0.35s; }
+  .bar:nth-child(10) { height: 18px; animation-delay: 0.45s; }
+  .bar:nth-child(11) { height: 28px; animation-delay: 0.05s; }
+  .bar:nth-child(12) { height: 36px; animation-delay: 0.55s; }
+
+  @keyframes wave {
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(0.3); }
+  }
+
+  /* Listen Now button */
+  .listen-btn {
+    display: block;
+    width: 100%;
+    background: var(--red);
+    color: var(--white);
+    border: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 18px 32px;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 4px 4px 0 var(--gold);
+  }
+
+  .listen-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.12);
+    transform: translateX(-100%);
+    transition: transform 0.4s;
+  }
+
+  .listen-btn:hover::before {
+    transform: translateX(0);
+  }
+
+  .listen-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--gold);
+  }
+
+  .listen-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 var(--gold);
+  }
+
+  /* ─── MOODBOARD STRIP ─── */
+  .mood-strip {
+    background: var(--blue);
+    padding: 28px 64px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    overflow: hidden;
+  }
+
+  .mood-strip-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: rgba(255,255,255,0.3);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .mood-pill {
+    flex-shrink: 0;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .mp-cream { background: var(--cream); color: var(--dark); }
+  .mp-gold  { background: var(--gold); color: var(--dark); }
+  .mp-pink  { background: var(--pink); color: var(--dark); }
+  .mp-red   { background: var(--red); color: var(--white); }
+
+  /* ─── TAGLINES ─── */
+  .taglines {
+    background: var(--red);
+    padding: 60px 64px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  .tagline-item {
+    text-align: center;
+    animation: fadeUp 0.8s both;
+  }
+
+  .tagline-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: rgba(255,255,255,0.15);
+    display: block;
+  }
+
+  .tagline-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(15px, 1.8vw, 20px);
+    color: var(--white);
+    line-height: 1.5;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--dark);
+    padding: 32px 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--white);
+    letter-spacing: 0.08em;
+  }
+
+  .footer-name span { color: var(--gold); }
+
+  .footer-copy {
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.1em;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { min-height: 60vh; }
+    .hero-right { min-height: 55vw; }
+    .content { grid-template-columns: 1fr; padding: 48px 32px; }
+    .bio-col { padding-right: 0; margin-bottom: 48px; }
+    .taglines { grid-template-columns: 1fr; padding: 48px 32px; }
+    .mood-strip { padding: 24px 32px; }
+    footer { flex-direction: column; gap: 12px; padding: 24px 32px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <!-- Left: Red panel -->
+  <div class="hero-left">
+    <div class="shape-blob"></div>
+    <div class="shape-circle"></div>
+
+    <!-- Squiggle SVG -->
+    <svg class="squiggle" viewBox="0 0 60 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 20 Q14 4 24 20 Q34 36 44 20 Q54 4 60 14" stroke="#1A1A2E" stroke-width="3" stroke-linecap="round" fill="none"/>
+    </svg>
+
+    <div class="hero-left-content">
+      <div class="genre-tag">✦ Indie Pop · Emotional · Authentic</div>
+      <h1 class="artist-name">Jessi<br><span>Lilli</span></h1>
+      <p class="song-title-hero">New single — <strong>"Piano in the Sky"</strong></p>
+    </div>
+  </div>
+
+  <!-- Right: Blue panel -->
+  <div class="hero-right">
+    <div class="scrap scrap-1"></div>
+    <div class="scrap scrap-2"></div>
+    <div class="star-shape"></div>
+
+    <div class="artist-image-wrap">
+      <div class="artist-image-outer">
+        <div class="artist-image-inner">
+          <div class="artist-placeholder">
+            <div class="placeholder-icon">🎹</div>
+            <div class="placeholder-label">Jessi Lilli</div>
+          </div>
+        </div>
+        <div class="image-badge">✦ Artist Photo</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MOOD STRIP ═══ -->
+<div class="mood-strip">
+  <span class="mood-strip-label">VIBES</span>
+  <span class="mood-pill mp-cream">Colourful</span>
+  <span class="mood-pill mp-gold">Playful</span>
+  <span class="mood-pill mp-red">Dramatic</span>
+  <span class="mood-pill mp-pink">Romance</span>
+  <span class="mood-pill mp-cream">Relatable</span>
+  <span class="mood-pill mp-gold">Vibrant</span>
+  <span class="mood-pill mp-red">Emotional</span>
+  <span class="mood-pill mp-pink">Uplifting</span>
+</div>
+
+<!-- ═══ CONTENT ═══ -->
+<section class="content">
+  <!-- Bio -->
+  <div class="bio-col">
+    <div class="section-label">About the Artist</div>
+    <h2 class="bio-heading">Confident.<br>Creative.<br><em>Playful.</em></h2>
+    <p class="bio-text">
+      Jessi Lilli is a rising indie-pop artist whose music blends energetic beats with raw emotional depth. Known for her authentic storytelling and vibrant stage presence, she connects with listeners through songs that feel both personal and universal.
+    </p>
+    <p class="bio-text">
+      Her sound is bold, her spirit is free — and every melody she writes carries a little piece of her heart. With her debut single <strong>"Piano in the Sky"</strong>, Jessi invites you into a world of longing, hope, and the courage to love.
+    </p>
+    <div class="tags">
+      <span class="tag tag-blue">Trendy</span>
+      <span class="tag tag-gold">Stylish</span>
+      <span class="tag tag-red">High Energy</span>
+      <span class="tag tag-blue">Abstract</span>
+      <span class="tag tag-gold">Textured</span>
+    </div>
+  </div>
+
+  <!-- Song Card -->
+  <div class="song-col">
+    <div class="song-card">
+      <div class="song-card-inner">
+        <!-- Vinyl record -->
+        <div class="vinyl">
+          <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="70" cy="70" r="70" fill="#111"/>
+            <circle cx="70" cy="70" r="60" fill="none" stroke="#222" stroke-width="8"/>
+            <circle cx="70" cy="70" r="50" fill="none" stroke="#1a1a1a" stroke-width="6"/>
+            <circle cx="70" cy="70" r="38" fill="none" stroke="#222" stroke-width="6"/>
+            <circle cx="70" cy="70" r="26" fill="none" stroke="#1a1a1a" stroke-width="4"/>
+            <!-- Center label -->
+            <circle cx="70" cy="70" r="18" fill="#C8201A"/>
+            <circle cx="70" cy="70" r="4" fill="#111"/>
+            <!-- Shine -->
+            <ellipse cx="50" cy="40" rx="12" ry="6" fill="white" opacity="0.04" transform="rotate(-30 50 40)"/>
+          </svg>
+        </div>
+
+        <p class="song-name">"Piano in the Sky"</p>
+        <p class="song-artist">— Jessi Lilli —</p>
+
+        <!-- Wave visualizer -->
+        <div class="wave">
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        </div>
+
+        <button class="listen-btn" onclick="this.textContent = '♫  Now Playing...'">
+          ▶ &nbsp; Listen Now
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TAGLINES ═══ -->
+<section class="taglines">
+  <div class="tagline-item" style="animation-delay:0.1s">
+    <span class="tagline-num">01</span>
+    <p class="tagline-text">"A melody that rises beyond the sky."</p>
+  </div>
+  <div class="tagline-item" style="animation-delay:0.25s">
+    <span class="tagline-num">02</span>
+    <p class="tagline-text">"Dreams don't need wings — just a piano."</p>
+  </div>
+  <div class="tagline-item" style="animation-delay:0.4s">
+    <span class="tagline-num">03</span>
+    <p class="tagline-text">"Touching the heavens, one note at a time."</p>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-name">Jessi <span>Lilli</span></div>
+  <div class="footer-copy">© 2025 · Piano in the Sky · All Rights Reserved</div>
+</footer>
+
+</body>
+</html>
